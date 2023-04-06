@@ -4,6 +4,9 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import Dashboard from './components/Dashboard';
+import PrivateRoute from './privateroutes/PrivateRoute';
+import ForgotPassword from './components/ForgotPassword';
 
 function App() {
   return (
@@ -13,8 +16,10 @@ function App() {
       <AuthProvider>
       <Routes>
         <Route exact path='/' Component={Login}/>
-        <Route exact path='/login' Component={Login}/>
-        <Route exact path='/signup' Component={Signup}/>
+        <Route path='/login' Component={Login}/>
+        <Route path='/signup' Component={Signup}/>
+        <Route path='/forgotpassword' Component={ForgotPassword}/>
+        <Route path='/dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}/>
       </Routes> 
       </AuthProvider>
       </div>

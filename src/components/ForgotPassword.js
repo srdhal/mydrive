@@ -5,13 +5,14 @@ import { useAuth} from '../context/AuthContext'
 
 
 
-export default function Signup() {
+export default function ForgotPassword() {
     const emailRef=useRef()
-    const passwordRef=useRef()
     
-    const {login,currUser} = useAuth()
+    const {passwordreset} = useAuth()
     const [err,setErr] =useState('')
     const [loading,setLoading]=useState(false)
+    const [msg,setMsg]=useState("")
+
     const navigate=useNavigate()
     
     async function handleSubmit(e){
@@ -20,10 +21,10 @@ export default function Signup() {
       try{
         setErr('')
         setLoading(true)
-        await login(emailRef.current.value,passwordRef.current.value)
-        navigate("/dashboard")
+        await passwordreset(emailRef.current.value)
+        setMsg("check your email to reset the password")
       }catch{
-          setErr('failed login')
+          setErr('failed to reset password')
       }
 
       setLoading(false)
@@ -33,28 +34,22 @@ return (
     <div>
          <Card className='p-4'>
             <Card.Body>
-            <h2>Log In</h2>
-            {currUser && currUser.email}
-            {err && <Alert variant="danger">{err}</Alert>}
+            <h2>Password Reset</h2>
+            {msg && <Alert variant="success">{msg}</Alert>}
                 <Form className='my-3' onSubmit={handleSubmit}>
                     <Form.Group className='my-3'>
                         <Form.Label id='email'>email</Form.Label>
                         <Form.Control type='text' ref={emailRef} required></Form.Control>
                     </Form.Group>
-                    <Form.Group className='my-3'>
-                        <Form.Label id='password'>password</Form.Label>
-                        <Form.Control type='password' ref={passwordRef} required></Form.Control>
-                    </Form.Group>
-                  <Button type="submit" disabled={loading} className='w-100'>submit</Button>
+                  <Button type="submit" disabled={loading} className='w-100'>reset</Button>
                 </Form>
             </Card.Body>
-            <div className='text-center'>
-              <Link to="/forgotpassword">Forgot Password</Link>
-            </div>
+           
          </Card>
-         <div>
-            Don't have an account ?<Link to="/signup">Sign Up</Link>
+         <div className='text-center'>
+            <Link to="/login">login</Link>
          </div>
+         
     </div>
   )
 }

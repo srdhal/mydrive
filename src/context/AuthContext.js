@@ -9,14 +9,29 @@ export function useAuth(){
 export function AuthProvider({children}) {
 
   const [currUser,setCurrUser]=useState()
-  
-  function login(email,password){
+  const [loading,setLoading]=useState(false)
+
+
+  function signin(email,password){
     return auth.createUserWithEmailAndPassword(email,password)
+  }
+
+  function login(email,password){
+    return auth.signInWithEmailAndPassword(email,password)
+  }
+
+  function logout(){
+    return auth.signOut()
+  }
+
+  function passwordreset(email){
+    return auth.sendPasswordResetEmail(email)
   }
 
   useEffect(()=>{
     const unsubcribe=auth.onAuthStateChanged((user)=>{
        setCurrUser(user)
+       setLoading(true)
     })
 
     return unsubcribe
@@ -24,12 +39,15 @@ export function AuthProvider({children}) {
 
   const value={
     currUser,
-    login
+    signin,
+    login,
+    logout,
+    passwordreset
   }
 
   return (
     <AuthContext.Provider value={value}>
-        {children}
+        {loading && children}
     </AuthContext.Provider>
   )
 }

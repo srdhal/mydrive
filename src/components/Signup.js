@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Form,Button,Card, Alert } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth} from '../context/AuthContext'
 
 
@@ -9,8 +9,8 @@ export default function Signup() {
     const emailRef=useRef()
     const passwordRef=useRef()
     const passwordConfirmRef=useRef()
-    
-    const {login,currUser} = useAuth()
+    const navigate=useNavigate()
+    const {signin,currUser} = useAuth()
     const [err,setErr] =useState('')
     const [loading,setLoading]=useState(false)
     
@@ -25,9 +25,10 @@ export default function Signup() {
       try{
         setErr('')
         setLoading(true)
-        await login(emailRef.current.value,passwordRef.current.value)
+        await signin(emailRef.current.value,passwordRef.current.value)
+        navigate("/login")
       }catch{
-          setErr('failed login')
+          setErr('failed to create an account')
       }
 
       setLoading(false)
@@ -38,7 +39,7 @@ return (
          <Card className='p-4'>
             <Card.Body>
             <h2>Sign In</h2>
-            {JSON.stringify(currUser)}
+            {/* {currUser.email} */}
             {err && <Alert variant="danger">{err}</Alert>}
                 <Form className='my-4' onSubmit={handleSubmit}>
                     <Form.Group className='my-3'>
