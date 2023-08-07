@@ -21,7 +21,7 @@ export default function Signup() {
         setErr('')
         setLoading(true)
         await login(emailRef.current.value,passwordRef.current.value)
-        navigate("/dashboard")
+        navigate("/")
       }catch{
           setErr('failed login')
       }

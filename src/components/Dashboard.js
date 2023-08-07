@@ -4,7 +4,7 @@ import CreateFolderButton from './CreateFolderButton';
 import { useFolder } from '../hooks/useFolder';
 import Folder from './Folder';
 import File from './File';
-import { useLocation, useParams} from 'react-router-dom';
+import { Link, useLocation, useParams} from 'react-router-dom';
 import FolderBreadCrumb from './FolderBreadCrumb';
 import UploadFileButton from './UploadFileButton';
 
@@ -25,7 +25,10 @@ export default function Dashboard() {
           <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            <a href="/profile">Profile</a>
+           <Link to='/profile'>
+           Profile
+           </Link>
+            {/* <a href="/profile">Profile</a> */}
           </Navbar.Text>
         </Navbar.Collapse>
         </Container>
